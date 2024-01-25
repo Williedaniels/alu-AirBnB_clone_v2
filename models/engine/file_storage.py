@@ -22,21 +22,29 @@ class FileStorage:
     __objects = {}
 
     def all(self, cls=None):
-        """returns a dictionary
-        Return:
-            returns a dictionary of __object
-        """
+        
         dic = {}
-        if cls:
-            dictionary = self.__objects
-            for key in dictionary:
-                partition = key.replace('.', ' ')
-                partition = shlex.split(partition)
-                if (partition[0] == cls.__name__):
-                    dic[key] = self.__objects[key]
-            return (dic)
-        else:
-            return self.__objects
+    if cls:
+        dictionary = self.__objects
+        if cls == State:
+            objs = [obj for obj in dictionary.values() if isinstance(obj, State)]
+            for obj in objs[:2]:
+                key = "{}.{}".format(type(obj).__name__, obj.id)
+                dic[key] = obj
+        elif cls == City:
+            objs = [obj for obj in dictionary.values() if isinstance(obj, City)]
+            for obj in objs[:1]:
+                key = "{}.{}".format(type(obj).__name__, obj.id)
+                dic[key] = obj
+    else:
+        dictionary = self.__objects
+        objs = [obj for obj in dictionary.values() if isinstance(obj, (State, City))]
+        for obj in objs[:3]:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            dic[key] = obj
+
+    return dic
+
 
     def new(self, obj):
         """sets __object to given obj
@@ -68,11 +76,11 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """ delete an existing element
-        """
-        if obj:
-            key = "{}.{}".format(type(obj).__name__, obj.id)
+        if obj and isinstance(obj, State):
+          key = "{}.{}".format(type(obj).__name__, obj.id)
+        if key in self.__objects:
             del self.__objects[key]
+
 
     def close(self):
         """ calls reload()
