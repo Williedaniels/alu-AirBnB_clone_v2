@@ -22,5 +22,5 @@ class Place(BaseModel, Base):
     amenity_ids = []
 
     # Define the relationship with the City class
-    city = relationship("City", backref="places")
+    city = relationship("City", backref="place_relationship")
 
