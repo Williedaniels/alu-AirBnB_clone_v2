@@ -35,7 +35,7 @@ class FileStorage:
                 partition = key.replace('.', ' ')
                 partition = shlex.split(partition)
                 if (partition[0] == cls.__name__):
-                    dic[key] = self.__objects[key]
+                    dic[keys] = self.__objects[keys]
             return (dic)
         else:
             return self.__objects
@@ -46,15 +46,15 @@ class FileStorage:
             obj: given object
         """
         if obj:
-            key = "{}.{}".format(type(obj).__name__, obj.id)
-            self.__objects[key] = obj
+            keys = "{}.{}".format(type(obj).__name__, obj.id)
+            self.__objects[keys] = obj
 
     def save(self):
         """serialize the file path to JSON file path
         """
         my_dict = {}
-        for key, value in self.__objects.items():
-            my_dict[key] = value.to_dict()
+        for keys, value in self.__objects.items():
+            my_dict[keys] = value.to_dict()
         with open(self.__file_path, 'w', encoding="UTF-8") as f:
             json.dump(my_dict, f)
 
@@ -65,7 +65,7 @@ class FileStorage:
             with open(self.__file_path, 'r', encoding="UTF-8") as f:
                 for key, value in (json.load(f)).items():
                     value = eval(value["__class__"])(**value)
-                    self.__objects[key] = value
+                    self.__objects[keys] = value
         except FileNotFoundError:
             pass
 
@@ -73,8 +73,8 @@ class FileStorage:
        """ delete an existing element
        """
        if obj:
-           key = "{}.{}".format(type(obj).__name__, obj.id)
-           del self.__objects[key]
+           keys = "{}.{}".format(type(obj).__name__, obj.id)
+           del self.__objects[keys]
 
 
     def close(self):
