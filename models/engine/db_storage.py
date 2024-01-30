@@ -12,6 +12,7 @@ class DBStorage:
     __engine = None
     __session = None
 
+
     def __init__(self):
         """Creates the engine"""
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}:3306/{}'.
@@ -56,8 +57,6 @@ self.__session = scoped_session(session_factory)
 
 # Create an instance of DBStorage
 storage = DBStorage()
-
-
 # Reload the storage
 storage.reload()
 
