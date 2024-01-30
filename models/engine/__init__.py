@@ -14,10 +14,10 @@ from os import getenv
 classes = {
     "BaseModel": BaseModel,
     "State": State,
-    "City": City,
-    "User": User,
-    "Place": Place,
     "Amenity": Amenity,
+    "User": User,
+    "City": City,
+    "Place": Place,
     "Review": Review,
 }
 
