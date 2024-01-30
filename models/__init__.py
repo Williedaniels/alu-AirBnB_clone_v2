@@ -2,6 +2,15 @@
 """This module instantiates an object of class FileStorage"""
 import os
 
+classes = {
+    "BaseModel": BaseModel,
+    "State": State,
+    "City": City,
+    "User": User,
+    "Place": Place,
+    "Amenity": Amenity,
+    "Review": Review,
+}
 
 if os.getenv("HBNB_TYPE_STORAGE") == "db":
     from models.engine.db_storage import DBStorage
