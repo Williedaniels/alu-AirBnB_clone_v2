@@ -89,6 +89,7 @@ class HBNBCommand(cmd.Cmd):
         print(obj.id)
     except Exception as e:
         print("** {}".format(str(e)))
+        return  # Exit the function if an exception occurs
 
 
 def do_show(self, line):
