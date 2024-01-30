@@ -85,7 +85,7 @@ class HBNBCommand(cmd.Cmd):
 
 
     def do_show(self, line):
-              """Prints the string representation of an instance
+        """Prints the string representation of an instance
     Exceptions:
         SyntaxError: when there is no args given
         NameError: when there is no object that has the name
@@ -123,6 +123,7 @@ class HBNBCommand(cmd.Cmd):
         print("** Error: {}".format(str(e)))
     except KeyError as e:
         print("** Error: {}".format(str(e)))
+
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id
