@@ -115,13 +115,13 @@ def do_show(self, line):
             raise KeyError("No instance found")
 
     except SyntaxError as e:
-        print(f"** Error: {str(e)}")
+        print("** Error: {}".format(str(e)))
     except NameError as e:
-        print(f"** Error: {str(e)}")
+        print("** Error: {}".format(str(e)))
     except IndexError as e:
-        print(f"** Error: {str(e)}")
+        print("** Error: {}".format(str(e)))
     except KeyError as e:
-        print(f"** Error: {str(e)}")
+        print("** Error: {}".format(str(e)))
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id
@@ -288,5 +288,4 @@ def do_show(self, line):
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
-
     
