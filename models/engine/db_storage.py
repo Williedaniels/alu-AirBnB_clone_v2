@@ -32,7 +32,8 @@ class DBStorage:
         else:
             for cl in base_model.classes:
                 objs += self.__session.query(cl).all()
-        return {'{}.{}'.format(type(obj).__name__, obj.id): obj for obj in objs}
+        return {'{}.{}'.format(type(obj).__name__, obj.id): obj
+        for obj in objs}
 
     def new(self, obj):
         """Adds the object to the current database session"""
@@ -50,11 +51,13 @@ class DBStorage:
     def reload(self):
         """Creates all tables in the database and creates the current session"""
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine,
-                                       expire_on_commit=False)
-        self.__session = scoped_session(session_factory)
+        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+self.__session = scoped_session(session_factory)
 
 # Create an instance of DBStorage
 storage = DBStorage()
+
+
 # Reload the storage
 storage.reload()
+
