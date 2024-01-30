@@ -114,7 +114,14 @@ def do_show(self, line):
         else:
             raise KeyError("No instance found")
 
-
+    except SyntaxError as e:
+        print("*** Unknown syntax bro: {}".format(str(e)))
+    except NameError as e:
+        print("*** Unknown syntax bro: {}".format(str(e)))
+    except IndexError as e:
+        print("*** Unknown syntax bro: {}".format(str(e)))
+    except KeyError as e:
+        print("*** Unknown syntax bro: {}".format(str(e)))
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id
