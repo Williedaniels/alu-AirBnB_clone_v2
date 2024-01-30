@@ -19,6 +19,7 @@ classes = {
     "City": City,
     "Place": Place,
     "Review": Review,
+    "User": User,
 }
 
 
