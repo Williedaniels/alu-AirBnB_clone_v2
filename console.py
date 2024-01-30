@@ -61,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
     """
     if not arg:
         print("** class name missing **")
-        return
+    return
 
 
     class_name, *params = shlex.split(arg)
