@@ -84,8 +84,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
 
-def do_show(self, line):
-    """Prints the string representation of an instance
+    def do_show(self, line):
+              """Prints the string representation of an instance
     Exceptions:
         SyntaxError: when there is no args given
         NameError: when there is no object that has the name
