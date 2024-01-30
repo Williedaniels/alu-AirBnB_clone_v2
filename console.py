@@ -92,6 +92,7 @@ def do_show(self, line):
         IndexError: when there is no id given
         KeyError: when there is no valid id given
     """
+    print("Executing do_show with input:", line)
     try:
         if not line:
             raise SyntaxError("No arguments given")
