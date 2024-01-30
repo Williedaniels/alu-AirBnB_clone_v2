@@ -7,11 +7,11 @@ from models.base_model import Base
 from models.state import State
 from models.city import City
 
+
 class DBStorage:
     """This class manages storage of hbnb models in a database"""
     __engine = None
     __session = None
-
 
     def __init__(self):
         """Creates the engine"""
