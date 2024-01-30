@@ -65,8 +65,7 @@ class HBNBCommand(cmd.Cmd):
                     print("** value missing **")
                     return
 
-                key, value = map(str.strip, key_value)
-
+                key, value = key_value
                 if value[0] == value[-1] == '"':
                     value = value[1:-1].replace("_", " ")
                 else:
@@ -93,7 +92,36 @@ def do_show(self, line):
         IndexError: when there is no id given
         KeyError: when there is no valid id given
     """
-    print("This is f up!")
+    try:
+        if not line:
+            raise SyntaxError("No arguments given")
+
+        args = line.split()
+        if len(args) < 2:
+            raise IndexError("Instance id missing")
+
+        class_name = args[0]
+        instance_id = args[1]
+
+        if class_name not in models.classes:
+            raise NameError("Class doesn't exist")
+
+        objects = storage.all()
+        key = class_name + '.' + instance_id
+
+        if key in objects:
+            print(objects[key])
+        else:
+            raise KeyError("No instance found")
+
+    except SyntaxError as e:
+        print("** Error: {}".format(str(e)))
+    except NameError as e:
+        print("** Error: {}".format(str(e)))
+    except IndexError as e:
+        print("** Error: {}".format(str(e)))
+    except KeyError as e:
+        print("** Error: {}".format(str(e)))
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id
