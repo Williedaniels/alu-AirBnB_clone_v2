@@ -33,15 +33,21 @@ class DBStorage:
         else:
             for cl in base_model.classes:
                 objs += self.__session.query(cl).all()
-        return {'{}.{}'.format(type(obj).__name__, obj.id): obj
-        for obj in objs}
+
+        result_dict = {}
+        for obj in objs:
+            key = '{}.{}'.format(type(obj).__name__, obj.id)
+            result_dict[key] = obj
+
+        return result_dict
 
     def new(self, obj):
         """Adds the object to the current database session"""
         self.__session.add(obj)
 
     def save(self):
-        """Commits all changes to the current database session"""
+        """Commits all changes to the current 
+        database session"""
         self.__session.commit()
 
     def delete(self, obj=None):
@@ -50,7 +56,8 @@ class DBStorage:
             self.__session.delete(obj)
 
     def reload(self):
-        """Creates all tables in the database and creates the current session"""
+        """Creates all tables in the database 
+        and creates the current session"""
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(
             bind=self.__engine,
