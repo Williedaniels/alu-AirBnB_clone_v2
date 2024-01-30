@@ -123,6 +123,7 @@ def do_show(self, line):
     except KeyError as e:
         print("*** Key Error: {}".format(str(e)))
 
+
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id
         Exceptions:
