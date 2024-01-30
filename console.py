@@ -270,7 +270,7 @@ def do_show(self, line):
             elif my_list[1] == "count()":
                 self.count(my_list[0])
             elif my_list[1][:4] == "show":
-                self.do_show(self.strip_clean(my_list))
+             self.do_show(my_list[1])
             elif my_list[1][:7] == "destroy":
                 self.do_destroy(self.strip_clean(my_list))
             elif my_list[1][:6] == "update":
