@@ -65,7 +65,8 @@ class HBNBCommand(cmd.Cmd):
                     print("** value missing **")
                     return
 
-                key, value = key_value
+                key, value = map(str.strip, key_value)
+
                 if value[0] == value[-1] == '"':
                     value = value[1:-1].replace("_", " ")
                 else:
