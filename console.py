@@ -43,45 +43,52 @@ class HBNBCommand(cmd.Cmd):
         print("")
         return True
 
-    def do_create(self, line):
-        """Usage: create <class> <key 1>=<value 1> <key 2>=<value 2> ...
-        Create a new class instance with given keys/values and print its id.
-        """
-        try:
-            if not line:
-                raise SyntaxError()
+    def do_create(self, arg):
+     """
+    Creates a new instance of a specified class with given parameters.
 
-            args = line.split()
-            class_name = args[0]
+    Syntax: create <Class name> <param 1> <param 2> <param 3>...
+    Param syntax: <key name>=<value>
+    Value syntax:
+    - String: "<value>" => starts with a double quote
+      any double quote inside the value must be escaped with a backslash \
+      all underscores _ must be replaced by spaces.
+    - Float: <unit>.<decimal> => contains a dot .
+    - Integer: <number> => default case
 
-            if class_name not in models.classes:
-                print("** class doesn't exist **")
-                return
+    If any parameter doesn’t fit these requirements or can’t be recognized correctly,
+    it must be skipped.
+    """
+    if not arg:
+        print("** class name missing **")
+        return
 
-            kwargs = {}
-            for arg in args[1:]:
-                key_value = arg.split("=")
-                if len(key_value) != 2:
-                    print("** value missing **")
-                    return
+    class_name, *params = shlex.split(arg)
+    if class_name not in classes:
+        print("** class doesn't exist **")
+        return
 
-                key, value = key_value
-                if value[0] == value[-1] == '"':
-                    value = value[1:-1].replace("_", " ")
-                else:
-                    try:
-                        value = eval(value)
-                    except (SyntaxError, NameError):
-                        continue
+    try:
+        param_dict = {}
+        for param in params:
+            key, value = param.split("=")
+            key = key.replace('_', ' ')
+            if value.startswith('"') and value.endswith('"'):
+                # String
+                value = value[1:-1].replace('\\"', '"').replace('_', ' ')
+            elif '.' in value:
+                # Float
+                value = float(value)
+            else:
+                # Integer
+                value = int(value)
+            param_dict[key] = value
 
-                kwargs[key] = value
-
-            new_instance = models.classes[class_name](**kwargs)
-            new_instance.save()
-            print(new_instance.id)
-
-        except SyntaxError:
-            print("** class name missing **")
+        obj = classes[class_name](**param_dict)
+        obj.save()
+        print(obj.id)
+    except Exception as e:
+        print("** {}".format(str(e)))
 
 
 def do_show(self, line):
