@@ -35,3 +35,4 @@ class State(BaseModel, Base):
             equals to the current State.id. """
             return [city for city in models.storage.all(City).values()
                     if city.state_id == self.id]
+            
