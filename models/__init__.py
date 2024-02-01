@@ -10,10 +10,10 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from os import getenv
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 
-load_dotenv()
+# load_dotenv()
 
 storage_type = getenv("HBNB_TYPE_STORAGE")
 print(f"HBNB_TYPE_STORAGE: {storage_type}")
