@@ -15,8 +15,8 @@ from os import getenv
 
 # load_dotenv()
 
-storage_type = getenv("HBNB_TYPE_STORAGE")
-print(f"HBNB_TYPE_STORAGE: {storage_type}")
+# storage_type = getenv("HBNB_TYPE_STORAGE")
+# print(f"HBNB_TYPE_STORAGE: {storage_type}")
 
 if getenv("HBNB_TYPE_STORAGE") == "db":
     storage = DBStorage()
