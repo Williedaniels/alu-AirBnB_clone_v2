@@ -49,9 +49,18 @@ class HBNBCommand(cmd.Cmd):
                 raise SyntaxError()
             my_list = line.split(" ")
 
+            print("my_list:", my_list)  # Debug print
+
             kwargs = {}
             for i in range(1, len(my_list)):
-                key, value = tuple(my_list[i].split("="))
+                key_value = my_list[i].split("=")
+                print("key_value:", key_value)  # Debug print
+
+                if len(key_value) != 2:
+                    print("** value missing **")
+                    return
+
+                key, value = key_value
                 if value[0] == '"':
                     value = value.strip('"').replace("_", " ")
                 else:
@@ -73,6 +82,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         except NameError:
             print("** class doesn't exist **")
+
 
     def do_show(self, line):
         """Prints the string representation of an instance

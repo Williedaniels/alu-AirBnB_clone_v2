@@ -25,12 +25,16 @@ class DBStorage:
         host = getenv("HBNB_MYSQL_HOST")
         env = getenv("HBNB_ENV")
 
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
+        self.__engine = create_engine('mysql+mysqlconnector:://{}:{}@{}/{}'
                                       .format(user, passwd, host, db),
                                       pool_pre_ping=True)
 
         if env == "test":
             Base.metadata.drop_all(self.__engine)
+
+    def create_all_tables(self):
+        """Create all tables in the database."""
+        Base.metadata.create_all(self.__engine)
 
     def all(self, cls=None):
         """returns a dictionary
