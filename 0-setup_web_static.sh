@@ -1,32 +1,22 @@
 #!/usr/bin/env bash
-# describe it then
-apt-get update
-apt-get -y install nginx
+# Install nginx and create a fake html file
 
-directories=("/data/web_static/releases/test" "/data/web_static/shared/")
+link_dir="/data/web_static/current"
+release_folder="/data/web_static/releases/test"
+HTML_CONTENT="<html>
+    <head>
+    </head>
+    <body>
+	My fake html file
+    </body>
+</html>"
 
-for directory in "${directories[@]}"; do
-  #  if [ ! -e "$directory" ]; then
-  mkdir -p "$directory"
-  #  fi
-done
-
-echo "<html>
-  <head>
-  </head>
-  <body>
-    Holberton School
-  </body>
-</html>" >/data/web_static/releases/test/index.html
-
-# Create a symbolic link /data/web_static/current linked to the /data/web_static/releases/test/ folder.
-# If the symbolic link already exists, it should be deleted and recreated every time the script is ran
-ln --symbolic --force /data/web_static/releases/test /data/web_static/current
-
-# The -R option ensures that the ownership changes are applied
-# recursively to all files and directories within the folder
+apt-get -y update >/dev/null 2>&1
+apt-get -y install nginx >/dev/null 2>&1
+mkdir -p /data/web_static/releases/test/
+mkdir -p /data/web_static/shared/
+echo "$HTML_CONTENT" >/data/web_static/releases/test/index.html
+ln -sf "$release_folder" "$link_dir"
 chown -R ubuntu:ubuntu /data/
-
-sed -i '/listen 80 default_server;/a \ \n    location /hbnb_static {\n        alias /data/web_static/current/;\n        index index.html;\n    }' /etc/nginx/sites-available/default
-
+sed -i '/^server {/,/^}/!b;/^}/i\\tlocation \/hbnb_static\/ {\n\t\talias \/data\/web_static\/current\/;\n\t}' /etc/nginx/sites-enabled/default
 service nginx restart

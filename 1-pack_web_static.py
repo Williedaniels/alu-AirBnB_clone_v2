@@ -1,19 +1,24 @@
 #!/usr/bin/python3
-"""Comment"""
-from fabric.api import local
+'''
+Fabric file to deploy web static
+
+This script uses  fabric to make deployments
+of a static app to a remote server
+'''
+from fabric.api import *
 from datetime import datetime
 
 
 def do_pack():
-    """Comment again"""
+    ''' Creates an archive of the web_static directory
+    Using format:
+        versions/web_static_<year><month><day><hour><minute><second>.tgz
+    '''
     local("mkdir -p versions")
-
-    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-    archive_path = "versions/web_static_{}.tgz".format(timestamp)
-
+    archive_path = "versions/web_static_{}.tgz".format(
+        datetime.now().strftime('%Y%m%d%H%M%S'))
     result = local("tar -cvzf {} web_static".format(archive_path))
 
-    if result.failed:
-        return None
-    else:
+    if result.succeeded:
         return archive_path
+    return None
