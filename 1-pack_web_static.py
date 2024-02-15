@@ -1,24 +1,21 @@
 #!/usr/bin/python3
-'''
-Fabric file to deploy web static
+""" This module contains the function do_pack that generates a .tgz archive
+  from the contents of the web_static folder (fabric script) """
 
-This script uses  fabric to make deployments
-of a static app to a remote server
-'''
+
 from fabric.api import *
 from datetime import datetime
 
 
 def do_pack():
-    ''' Creates an archive of the web_static directory
-    Using format:
-        versions/web_static_<year><month><day><hour><minute><second>.tgz
-    '''
-    local('sudo mkdir -p versions')
-    archive_path = "versions/web_static_{}.tgz".format(
-        datetime.now().strftime('%Y%m%d%H%M%S'))
-    result = local("tar -cvzf {} web_static".format(archive_path))
-
+    """ Fabric script that generates a .tgz archive from the contents of the...
+    ...web_static folder """
+    local("sudo mkdir -p versions")
+    date = datetime.now().strftime("%Y%m%d%H%M%S")
+    filename = "versions/web_static_{}.tgz".format(date)
+    result = local("sudo tar -cvzf {} web_static".format(filename))
     if result.succeeded:
-        return archive_path
-    return None
+        return filename
+    else:
+        return None
+    
