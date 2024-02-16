@@ -4,7 +4,9 @@
 # Install Nginx if not already installed
 sudo apt-get -y update
 sudo apt-get -y upgrade
-sudo apt-install -y nginx
+if ! command -v nginx &> /dev/null; then
+    sudo apt-install -y nginx
+fi
 
 # Create the folders
 sudo mkdir -p /data/web_static/{releases,shared}
@@ -14,7 +16,9 @@ sudo mkdir -p /data/web_static/releases/test
 echo "webstatic_deployment" | sudo tee /data/web_static/releases/test/index.html
 
 # Create a symbolic link
-sudo rm -f /data/web_static/current
+if [ -h "/data/web_static/current" ]; then
+    sudo rm -f /data/web_static/current
+fi
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 
 # Give ownership of the /data/ folder to the ubuntu user AND group
@@ -25,3 +29,10 @@ sudo sed -i '38i\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;
 
 # Restart Nginx
 sudo service nginx restart
+
+# Check if the script executed successfully
+if [ $? -eq 0 ]; then
+    echo "Script completed successfully."
+else
+    echo "Script encountered errors."
+fi
