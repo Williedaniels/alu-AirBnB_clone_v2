@@ -19,4 +19,3 @@ def do_pack():
         return archive_path
     else:
         return None
-    
